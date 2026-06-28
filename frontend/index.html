@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyFinance</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- App header -->
+    <header class="header">
+      <h1 class="header__title">MyFinance</h1>
+      <p class="header__subtitle">Personal finance tracker</p>
+    </header>
+
+    <main class="main">
+
+      <!-- Dashboard section — shows balance, income and expenses -->
+      <section class="dashboard">
+        <div class="dashboard__card dashboard__card--balance">
+          <p class="dashboard__label">Total Balance</p>
+          <h2 class="dashboard__amount" id="total-balance">€0.00</h2>
+        </div>
+        <div class="dashboard__card dashboard__card--income">
+          <p class="dashboard__label">Total Income</p>
+          <h2 class="dashboard__amount" id="total-income">€0.00</h2>
+        </div>
+        <div class="dashboard__card dashboard__card--expense">
+          <p class="dashboard__label">Total Expenses</p>
+          <h2 class="dashboard__amount" id="total-expenses">€0.00</h2>
+        </div>
+      </section>
+
+      <!-- Form section — add a new transaction -->
+      <section class="form-section">
+        <h3 class="form-section__title">Add Transaction</h3>
+        <form class="form" id="transaction-form">
+          <div class="form__group">
+            <label class="form__label" for="amount">Amount (€)</label>
+            <input class="form__input" type="number" id="amount" placeholder="0.00" required />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="type">Type</label>
+            <select class="form__input" id="type" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="category">Category</label>
+            <input class="form__input" type="text" id="category" placeholder="e.g. food, rent, salary" required />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="description">Description</label>
+            <input class="form__input" type="text" id="description" placeholder="Optional description" />
+          </div>
+          <button class="form__button" type="submit">Add Transaction</button>
+        </form>
+      </section>
+
+      <!-- Transactions section — list of all transactions -->
+      <section class="transactions-section">
+        <h3 class="transactions-section__title">Transactions</h3>
+        <ul class="transactions-list" id="transactions-list">
+          <!-- Transactions will be inserted here by JavaScript -->
+        </ul>
+      </section>
+
+    </main>
+  </body>
+</html>
