@@ -296,3 +296,89 @@ body {
         flex-direction: column;
     }
 }
+
+/* ── AI Insights section ── */
+.ai-section {
+    background: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.ai-section__title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--color-text-primary);
+}
+
+.ai-card {
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.ai-card:last-child {
+    margin-bottom: 0;
+}
+
+.ai-card__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.ai-card__icon {
+    font-size: 18px;
+}
+
+.ai-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.ai-card__button {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 10px;
+}
+
+.ai-card__button:hover {
+    background: var(--color-primary-dark);
+}
+
+.ai-card__button:disabled {
+    background: var(--color-text-secondary);
+    cursor: not-allowed;
+}
+
+.ai-card__result {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.ai-card__anomaly {
+    color: var(--color-danger);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ai-card__empty {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 6px;
+}

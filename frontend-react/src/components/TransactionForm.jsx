@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { categorizeTransaction } from "../api";
 
 // Form component for adding a new transaction.
 // Calls onAddTransaction (passed from parent) when submitted.
@@ -7,6 +8,20 @@ function TransactionForm({ onAddTransaction }) {
     const [type, setType] = useState("income");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
+    const [categorizing, setCategorizing] = useState(false);
+
+    // Calls AI to suggest a category based on description.
+    async function handleDescriptionBlur() {
+        if (!description || category) return;
+        setCategorizing(true);
+        try {
+            const data = await categorizeTransaction(description);
+            setCategory(data.category);
+        } catch (error) {
+            console.error("Failed to categorize:", error);
+        }
+        setCategorizing(false);
+    }
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -20,7 +35,6 @@ function TransactionForm({ onAddTransaction }) {
 
         onAddTransaction(newTransaction);
 
-        // Reset form fields after submission.
         setAmount("");
         setType("income");
         setCategory("");
@@ -53,8 +67,25 @@ function TransactionForm({ onAddTransaction }) {
                         <option value="expense">Expense</option>
                     </select>
                 </div>
-     <div className="form__group">
-                    <label className="form__label">Category</label>
+                <div className="form__group">
+                    <label className="form__label">
+                        Description
+                        {categorizing && <span style={{color: "#6366f1", marginLeft: 8, fontSize: 11}}>AI categorizing...</span>}
+                    </label>
+                    <input
+                        className="form__input"
+                        type="text"
+                        placeholder="e.g. McDonald's lunch, Monthly salary"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        onBlur={handleDescriptionBlur}
+                    />
+                </div>
+                <div className="form__group">
+                    <label className="form__label">
+                        Category
+                        {categorizing && <span style={{color: "#6366f1", marginLeft: 8, fontSize: 11}}>suggested by AI ✨</span>}
+                    </label>
                     <input
                         className="form__input"
                         type="text"
@@ -62,16 +93,6 @@ function TransactionForm({ onAddTransaction }) {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         required
-                    />
-                </div>
-                <div className="form__group">
-                    <label className="form__label">Description</label>
-                    <input
-                        className="form__input"
-                        type="text"
-                        placeholder="Optional description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <button className="form__button" type="submit">

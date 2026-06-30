@@ -4,6 +4,7 @@ import Dashboard from "./components/Dashboard";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import SpendingChart from "./components/SpendingChart";
+import AIInsights from "./components/AIInsights";
 import { getTransactions, createTransaction, deleteTransaction } from "./api";
 import "./index.css";
 
@@ -65,6 +66,7 @@ function App() {
                 <Dashboard balance={balance} income={income} expenses={expenses} />
                 <TransactionForm onAddTransaction={handleAddTransaction} />
                 <SpendingChart transactions={transactions} />
+                <AIInsights transactions={transactions} />
                 <TransactionList
                     transactions={transactions}
                     onDelete={handleDeleteTransaction}
