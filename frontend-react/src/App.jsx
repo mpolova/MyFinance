@@ -8,27 +8,28 @@ import AIInsights from "./components/AIInsights";
 import { getTransactions, createTransaction, deleteTransaction } from "./api";
 import "./index.css";
 
-// Main application component. Holds all shared state and connects
-// all child components together.
 function App() {
     const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Fetch transactions from the API when the app first loads.
     useEffect(() => {
         loadTransactions();
     }, []);
 
-    // Loads all transactions from the backend and updates state.
     async function loadTransactions() {
+        setLoading(true);
+        setError(null);
         try {
             const data = await getTransactions();
             setTransactions(data);
         } catch (error) {
+            setError("Failed to connect to the server. Make sure the backend is running.");
             console.error("Failed to load transactions:", error);
         }
+        setLoading(false);
     }
 
-    // Sends a new transaction to the backend, then refreshes the list.
     async function handleAddTransaction(newTransaction) {
         try {
             await createTransaction(newTransaction);
@@ -38,7 +39,6 @@ function App() {
         }
     }
 
-    // Deletes a transaction by id, then refreshes the list.
     async function handleDeleteTransaction(id) {
         try {
             await deleteTransaction(id);
@@ -48,7 +48,6 @@ function App() {
         }
     }
 
-    // Calculate totals from the current transactions list.
     const income = transactions
         .filter((t) => t.type === "income")
         .reduce((sum, t) => sum + t.amount, 0);
@@ -58,6 +57,28 @@ function App() {
         .reduce((sum, t) => sum + t.amount, 0);
 
     const balance = income - expenses;
+
+    if (loading) {
+        return (
+            <div>
+                <Header />
+                <div className="loading-state">
+                    <p>Loading your finances...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div>
+                <Header />
+                <div className="error-state">
+                    <p>⚠️ {error}</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>
